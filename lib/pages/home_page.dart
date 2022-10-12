@@ -19,6 +19,7 @@ class _HomePageState extends State<HomePage> {
   List imageList = [
     'images/coffee1.jpeg',
     'images/coffee2.jpeg',
+    'images/coffee3.jpeg',
   ];
 
   void changeCoffeeSelection(int index) {
@@ -149,12 +150,14 @@ class _HomePageState extends State<HomePage> {
                 Center(
                   child: Container(
                     height: 400.h,
-                    // width: 300.w,
                     child: Swiper(
                       axisDirection: AxisDirection.right,
                       itemBuilder: (BuildContext context, int index) {
-                        return Image.asset(
-                          imageList[index],
+                        return ClipRRect(
+                          borderRadius: BorderRadius.circular(40.r),
+                          child: Image.asset(
+                            imageList[index],
+                          ),
                         );
                       },
                       itemCount: imageList.length,
