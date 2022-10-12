@@ -20,6 +20,7 @@ class _HomePageState extends State<HomePage> {
     'images/coffee1.jpeg',
     'images/coffee2.jpeg',
     'images/coffee3.jpeg',
+    'images/coffee4.jpeg',
   ];
 
   void changeCoffeeSelection(int index) {
@@ -31,8 +32,14 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  int swipperIndex = 0;
+
+  SwiperController _mySwipperController = SwiperController();
+
   @override
   Widget build(BuildContext context) {
+    _mySwipperController.move(swipperIndex);
+
     return Scaffold(
       backgroundColor: Color(0xFF0D0F15),
       body: SingleChildScrollView(
@@ -118,6 +125,9 @@ class _HomePageState extends State<HomePage> {
                             GestureDetector(
                               onTap: () {
                                 changeCoffeeSelection(index);
+                                setState(() {
+                                  swipperIndex = index;
+                                });
                               },
                               child: Text(
                                 coffeeType[index][0],
@@ -149,21 +159,30 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Center(
                   child: Container(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 10.h,
+                    ),
                     height: 400.h,
                     child: Swiper(
-                      axisDirection: AxisDirection.right,
-                      itemBuilder: (BuildContext context, int index) {
-                        return ClipRRect(
-                          borderRadius: BorderRadius.circular(40.r),
-                          child: Image.asset(
-                            imageList[index],
-                          ),
-                        );
-                      },
-                      itemCount: imageList.length,
-                      layout: SwiperLayout.STACK,
-                      itemWidth: 300.w,
-                    ),
+                        controller: _mySwipperController,
+                        axisDirection: AxisDirection.right,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(
+                              20.r,
+                            ),
+                            child: Image.asset(
+                              imageList[index],
+                              fit: BoxFit.cover,
+                            ),
+                          );
+                        },
+                        itemCount: imageList.length,
+                        layout: SwiperLayout.STACK,
+                        itemWidth: 300.w,
+                        onIndexChanged: (value) {
+                          print(coffeeType[value][0]);
+                        }),
                   ),
                 ),
               ],
