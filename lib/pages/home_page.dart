@@ -1,5 +1,6 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:coffee_app/components/my_textfield.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -198,12 +199,73 @@ class _HomePageState extends State<HomePage> {
                       itemCount: imageList.length,
                       layout: SwiperLayout.STACK,
                       itemWidth: 300.w,
-                      onIndexChanged: (value) {
-                        print(coffeeType[value][0]);
-                      },
+                      onIndexChanged: (value) {},
                     ),
                   ),
                 ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      // bottomNavigationBar: CurvedNavigationBar(
+      //   color: Color.fromARGB(255, 47, 53, 71),
+      //   backgroundColor: Color(0xFF0D0F15),
+      //   buttonBackgroundColor: Color(0xFFD27742),
+      //   items: <Widget>[
+      //     Icon(
+      //       Icons.add,
+      //       size: 30,
+      //       color: Colors.grey.shade600,
+      //     ),
+      //     Icon(
+      //       Icons.list,
+      //       size: 30,
+      //       color: Colors.grey.shade600,
+      //     ),
+      //     Icon(
+      //       Icons.compare_arrows,
+      //       size: 30,
+      //       color: Colors.grey.shade600,
+      //     ),
+      //   ],
+      //   onTap: (index) {
+      //     //Handle button tap
+      //   },
+      // ),
+      floatingActionButton: Container(
+        height: 70,
+        width: 70,
+        child: FloatingActionButton(
+          onPressed: () {},
+        ),
+      ),
+
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomAppBar(
+        shape: CircularNotchedRectangle(),
+        notchMargin: 10,
+        color: Color.fromARGB(255, 28, 31, 41),
+        child: Container(
+          height: 50,
+          width: double.infinity,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 50,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Icon(
+                  Icons.home,
+                  color: Colors.white,
+                  size: 30,
+                ),
+                Icon(
+                  Icons.menu,
+                  color: Colors.white,
+                  size: 30,
+                )
               ],
             ),
           ),
