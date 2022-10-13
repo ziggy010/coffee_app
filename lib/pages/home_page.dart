@@ -31,17 +31,10 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  int swipperIndex = 0;
-
   SwiperController _mySwipperController = SwiperController();
 
   @override
   Widget build(BuildContext context) {
-    _mySwipperController.move(
-      swipperIndex,
-      animation: true,
-    );
-
     return Scaffold(
       backgroundColor: Color(0xFF0D0F15),
       body: SingleChildScrollView(
@@ -144,9 +137,7 @@ class _HomePageState extends State<HomePage> {
                             GestureDetector(
                               onTap: () {
                                 changeCoffeeSelection(index);
-                                setState(() {
-                                  swipperIndex = index;
-                                });
+                                _mySwipperController.move(index);
                               },
                               child: Text(
                                 coffeeType[index][0],
@@ -155,7 +146,7 @@ class _HomePageState extends State<HomePage> {
                                       ? Color(0xFFD27742)
                                       : Colors.grey.shade600,
                                   fontFamily: 'poppins',
-                                  fontSize: 24.sp,
+                                  fontSize: 20.sp,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -199,7 +190,9 @@ class _HomePageState extends State<HomePage> {
                       itemCount: imageList.length,
                       layout: SwiperLayout.STACK,
                       itemWidth: 300.w,
-                      onIndexChanged: (value) {},
+                      onIndexChanged: (value) {
+                        changeCoffeeSelection(value);
+                      },
                     ),
                   ),
                 ),
