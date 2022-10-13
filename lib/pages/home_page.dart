@@ -13,14 +13,12 @@ class _HomePageState extends State<HomePage> {
     ['Cappucciono', true],
     ['Espresso', false],
     ['Latte', false],
-    ['Flat wine', false],
   ];
 
   List imageList = [
     'images/coffee1.jpeg',
     'images/coffee2.jpeg',
     'images/coffee3.jpeg',
-    'images/coffee4.jpeg',
   ];
 
   void changeCoffeeSelection(int index) {
@@ -117,7 +115,7 @@ class _HomePageState extends State<HomePage> {
                     itemBuilder: (BuildContext context, int index) {
                       return Padding(
                         padding: EdgeInsets.only(
-                          right: 30.w,
+                          right: 40.w,
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,7 +134,7 @@ class _HomePageState extends State<HomePage> {
                                       ? Color(0xFFD27742)
                                       : Colors.grey.shade600,
                                   fontFamily: 'poppins',
-                                  fontSize: 20.sp,
+                                  fontSize: 24.sp,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),

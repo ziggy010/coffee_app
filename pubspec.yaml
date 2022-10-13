@@ -38,6 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_screenutil: ^5.5.4
   card_swiper: ^2.0.4
+  liquid_pull_to_refresh: ^3.0.1
 
 dev_dependencies:
   flutter_test:
