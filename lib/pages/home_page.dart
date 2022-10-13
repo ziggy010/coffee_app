@@ -237,6 +237,10 @@ class _HomePageState extends State<HomePage> {
         height: 70,
         width: 70,
         child: FloatingActionButton(
+          child: Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
           onPressed: () {},
         ),
       ),
