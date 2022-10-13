@@ -172,7 +172,7 @@ class _HomePageState extends State<HomePage> {
                     padding: EdgeInsets.symmetric(
                       vertical: 10.h,
                     ),
-                    height: 400.h,
+                    height: 400,
                     child: Swiper(
                       controller: _mySwipperController,
                       axisDirection: AxisDirection.right,
