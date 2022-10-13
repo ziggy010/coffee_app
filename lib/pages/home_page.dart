@@ -36,7 +36,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    _mySwipperController.move(swipperIndex);
+    _mySwipperController.move(
+      swipperIndex,
+      animation: true,
+    );
 
     return Scaffold(
       backgroundColor: Color(0xFF0D0F15),
@@ -87,17 +90,34 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 30.h,
-                ),
-                Text(
-                  'Find the best\ncoffee for you',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'poppins',
-                    fontSize: 35.sp,
-                    fontWeight: FontWeight.bold,
+                // SizedBox(
+                //   height: 30.h,
+                // ),
+                TweenAnimationBuilder(
+                  curve: Curves.easeInOut,
+                  duration: Duration(milliseconds: 700),
+                  tween: Tween<double>(begin: 0, end: 1),
+                  child: Text(
+                    'Find the best\ncoffee for you',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'poppins',
+                      fontSize: 35.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
+                  builder:
+                      (BuildContext context, dynamic value, Widget? child) {
+                    return Opacity(
+                      opacity: value,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          top: value * 30,
+                        ),
+                        child: child,
+                      ),
+                    );
+                  },
                 ),
                 SizedBox(
                   height: 30.h,
@@ -162,25 +182,26 @@ class _HomePageState extends State<HomePage> {
                     ),
                     height: 400.h,
                     child: Swiper(
-                        controller: _mySwipperController,
-                        axisDirection: AxisDirection.right,
-                        itemBuilder: (BuildContext context, int index) {
-                          return ClipRRect(
-                            borderRadius: BorderRadius.circular(
-                              20.r,
-                            ),
-                            child: Image.asset(
-                              imageList[index],
-                              fit: BoxFit.cover,
-                            ),
-                          );
-                        },
-                        itemCount: imageList.length,
-                        layout: SwiperLayout.STACK,
-                        itemWidth: 300.w,
-                        onIndexChanged: (value) {
-                          print(coffeeType[value][0]);
-                        }),
+                      controller: _mySwipperController,
+                      axisDirection: AxisDirection.right,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ClipRRect(
+                          borderRadius: BorderRadius.circular(
+                            20.r,
+                          ),
+                          child: Image.asset(
+                            imageList[index],
+                            fit: BoxFit.cover,
+                          ),
+                        );
+                      },
+                      itemCount: imageList.length,
+                      layout: SwiperLayout.STACK,
+                      itemWidth: 300.w,
+                      onIndexChanged: (value) {
+                        print(coffeeType[value][0]);
+                      },
+                    ),
                   ),
                 ),
               ],
