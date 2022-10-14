@@ -1,3 +1,4 @@
+import 'package:coffee_app/pages/detail_page.dart';
 import 'package:coffee_app/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       builder: ((context, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: HomePage(),
+          home: DetailPage(),
         );
       }),
     );
