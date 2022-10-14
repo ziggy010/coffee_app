@@ -2,7 +2,11 @@ import 'package:coffee_app/pages/constant.dart';
 import 'package:flutter/material.dart';
 
 class DetailPage extends StatelessWidget {
-  const DetailPage({Key? key}) : super(key: key);
+  final String title;
+
+  DetailPage({
+    required this.title,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -10,8 +14,8 @@ class DetailPage extends StatelessWidget {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: appbarColor,
-        title: const Text(
-          'Cappuccino',
+        title: Text(
+          title,
           style: TextStyle(
             color: Colors.white,
             fontFamily: 'poppins',

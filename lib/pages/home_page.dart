@@ -34,6 +34,8 @@ class _HomePageState extends State<HomePage> {
 
   SwiperController _mySwipperController = SwiperController();
 
+  int whichCardClicked = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -181,7 +183,10 @@ class _HomePageState extends State<HomePage> {
                       itemBuilder: (BuildContext context, int index) {
                         return GestureDetector(
                           onTap: () {
-                            print('clicked value: ${index}');
+                            setState(() {
+                              whichCardClicked = index;
+                              if (index == 0) {}
+                            });
                           },
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(
