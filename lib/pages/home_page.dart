@@ -252,7 +252,7 @@ class _HomePageState extends State<HomePage> {
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: const [
                 Icon(
                   Icons.home,
                   color: Colors.white,
