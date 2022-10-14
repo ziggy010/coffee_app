@@ -177,13 +177,18 @@ class _HomePageState extends State<HomePage> {
                       controller: _mySwipperController,
                       axisDirection: AxisDirection.right,
                       itemBuilder: (BuildContext context, int index) {
-                        return ClipRRect(
-                          borderRadius: BorderRadius.circular(
-                            20.r,
-                          ),
-                          child: Image.asset(
-                            imageList[index],
-                            fit: BoxFit.cover,
+                        return GestureDetector(
+                          onTap: () {
+                            print('clicked value: ${index}');
+                          },
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(
+                              20.r,
+                            ),
+                            child: Image.asset(
+                              imageList[index],
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         );
                       },
