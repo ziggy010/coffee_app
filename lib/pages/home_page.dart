@@ -230,7 +230,7 @@ class _HomePageState extends State<HomePage> {
         height: 70,
         width: 70,
         child: FloatingActionButton(
-          child: Icon(
+          child: const Icon(
             Icons.add,
             color: Colors.white,
           ),
