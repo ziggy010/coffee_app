@@ -1,7 +1,8 @@
 import 'package:coffee_app/pages/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
-class DetailPage extends StatelessWidget {
+class DetailPage extends StatefulWidget {
   static String id = 'DetailPage';
   final String title;
 
@@ -10,13 +11,18 @@ class DetailPage extends StatelessWidget {
   });
 
   @override
+  State<DetailPage> createState() => _DetailPageState();
+}
+
+class _DetailPageState extends State<DetailPage> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: appbarColor,
         title: Text(
-          title,
+          widget.title,
           style: TextStyle(
             color: Colors.white,
             fontFamily: 'poppins',
@@ -63,13 +69,12 @@ class DetailPage extends StatelessWidget {
               height: 30,
             ),
             Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: appbarColor,
-                  borderRadius: BorderRadius.circular(12),
-                ),
+                child: Container(
+              decoration: BoxDecoration(
+                color: appbarColor,
+                borderRadius: BorderRadius.circular(12),
               ),
-            ),
+            )),
           ],
         ),
       ),
