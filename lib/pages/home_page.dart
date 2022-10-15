@@ -1,10 +1,14 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:coffee_app/components/my_textfield.dart';
+import 'package:coffee_app/pages/constant.dart';
+import 'package:coffee_app/pages/detail_page.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomePage extends StatefulWidget {
+  static String id = 'HomePage';
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -33,10 +37,13 @@ class _HomePageState extends State<HomePage> {
 
   SwiperController _mySwipperController = SwiperController();
 
+  int whichCardClicked = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF0D0F15),
+      resizeToAvoidBottomInset: false,
+      backgroundColor: backgroundColor,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
@@ -177,13 +184,41 @@ class _HomePageState extends State<HomePage> {
                       controller: _mySwipperController,
                       axisDirection: AxisDirection.right,
                       itemBuilder: (BuildContext context, int index) {
-                        return ClipRRect(
-                          borderRadius: BorderRadius.circular(
-                            20.r,
-                          ),
-                          child: Image.asset(
-                            imageList[index],
-                            fit: BoxFit.cover,
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              whichCardClicked = index;
+                              if (index == 0) {
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return DetailPage(title: 'Cappucino');
+                                  },
+                                ));
+                              }
+                              if (index == 1) {
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return DetailPage(title: 'Espresso');
+                                  },
+                                ));
+                              }
+                              if (index == 2) {
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return DetailPage(title: 'Latte');
+                                  },
+                                ));
+                              }
+                            });
+                          },
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(
+                              20.r,
+                            ),
+                            child: Image.asset(
+                              imageList[index],
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         );
                       },
@@ -230,7 +265,7 @@ class _HomePageState extends State<HomePage> {
         height: 70,
         width: 70,
         child: FloatingActionButton(
-          child: Icon(
+          child: const Icon(
             Icons.add,
             color: Colors.white,
           ),
@@ -252,7 +287,7 @@ class _HomePageState extends State<HomePage> {
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: const [
                 Icon(
                   Icons.home,
                   color: Colors.white,
