@@ -17,7 +17,13 @@ class MyApp extends StatelessWidget {
       builder: ((context, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: HomePage(),
+          initialRoute: HomePage.id,
+          routes: {
+            HomePage.id: (context) => HomePage(),
+            DetailPage.id: (context) => DetailPage(
+                  title: '',
+                ),
+          },
         );
       }),
     );

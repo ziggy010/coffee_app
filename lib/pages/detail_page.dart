@@ -2,6 +2,7 @@ import 'package:coffee_app/pages/constant.dart';
 import 'package:flutter/material.dart';
 
 class DetailPage extends StatelessWidget {
+  static String id = 'DetailPage';
   final String title;
 
   DetailPage({
