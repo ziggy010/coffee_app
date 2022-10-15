@@ -13,88 +13,81 @@ class DetailPage extends StatefulWidget {
   State<DetailPage> createState() => _DetailPageState();
 }
 
-class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation _colorAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _controller = AnimationController(
-      duration: const Duration(
-        milliseconds: 800,
-      ),
-      vsync: this,
-    );
-
-    _controller.forward();
-
-    _controller.addListener(() {
-      print(_controller.value);
-    });
-  }
+class _DetailPageState extends State<DetailPage> {
+  bool isTapped = false;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: backgroundColor,
-      appBar: AppBar(
-        backgroundColor: appbarColor,
-        title: Text(
-          widget.title,
-          style: TextStyle(
-            color: Colors.white,
-            fontFamily: 'poppins',
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          isTapped = true;
+        });
+      },
+      child: Scaffold(
+        backgroundColor: backgroundColor,
+        appBar: AppBar(
+          backgroundColor: appbarColor,
+          title: Text(
+            widget.title,
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'poppins',
+            ),
           ),
         ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
+        body: Stack(
           children: [
-            Container(
-              height: 200,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: appbarColor,
-                borderRadius: BorderRadius.circular(18),
+            Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Column(
+                children: [
+                  Container(
+                    height: 200,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: appbarColor,
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        height: 45,
+                        width: 120,
+                        decoration: BoxDecoration(
+                          color: appbarColor,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      Container(
+                        height: 45,
+                        width: 120,
+                        decoration: BoxDecoration(
+                          color: appbarColor,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: appbarColor,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-            SizedBox(
-              height: 30,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Container(
-                  height: 45,
-                  width: 120,
-                  decoration: BoxDecoration(
-                    color: appbarColor,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                Container(
-                  height: 45,
-                  width: 120,
-                  decoration: BoxDecoration(
-                    color: appbarColor,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            Expanded(
-                child: Container(
-              decoration: BoxDecoration(
-                color: appbarColor,
-                borderRadius: BorderRadius.circular(12),
-              ),
-            )),
           ],
         ),
       ),
