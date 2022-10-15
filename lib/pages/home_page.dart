@@ -13,11 +13,26 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 400),
+    );
+
+    _animationController.forward();
+  }
+
   List coffeeType = [
-    ['Cappucciono', true],
-    ['Espresso', false],
-    ['Latte', false],
+    ['Cappucciono', true, 'firstText'],
+    ['Espresso', false, 'secondText'],
+    ['Latte', false, 'thirdText'],
   ];
 
   List imageList = [
@@ -91,35 +106,53 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ),
-                // SizedBox(
-                //   height: 30.h,
-                // ),
-                TweenAnimationBuilder(
-                  curve: Curves.easeInOut,
-                  duration: Duration(milliseconds: 700),
-                  tween: Tween<double>(begin: 0, end: 1),
-                  child: Text(
-                    'Find the best\ncoffee for you',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'poppins',
-                      fontSize: 35.sp,
-                      fontWeight: FontWeight.bold,
+                SizedBox(
+                  height: 30.h,
+                ),
+                SlideTransition(
+                  position:
+                      Tween<Offset>(begin: Offset(0, -0.5), end: Offset.zero)
+                          .animate(_animationController),
+                  child: FadeTransition(
+                    opacity: _animationController,
+                    child: Text(
+                      'Find the best\ncoffee for you',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'poppins',
+                        fontSize: 35.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                  builder:
-                      (BuildContext context, dynamic value, Widget? child) {
-                    return Opacity(
-                      opacity: value,
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          top: value * 30,
-                        ),
-                        child: child,
-                      ),
-                    );
-                  },
                 ),
+
+                // TweenAnimationBuilder(
+                //   curve: Curves.easeInOut,
+                //   duration: Duration(milliseconds: 700),
+                //   tween: Tween<double>(begin: 0, end: 1),
+                //   child: Text(
+                //     'Find the best\ncoffee for you',
+                //     style: TextStyle(
+                //       color: Colors.white,
+                //       fontFamily: 'poppins',
+                //       fontSize: 35.sp,
+                //       fontWeight: FontWeight.bold,
+                //     ),
+                //   ),
+                //   builder:
+                //       (BuildContext context, dynamic value, Widget? child) {
+                //     return Opacity(
+                //       opacity: value,
+                //       child: Padding(
+                //         padding: EdgeInsets.only(
+                //           top: value * 30,
+                //         ),
+                //         child: child,
+                //       ),
+                //     );
+                //   },
+                // ),
                 SizedBox(
                   height: 30.h,
                 ),
@@ -147,7 +180,7 @@ class _HomePageState extends State<HomePage> {
                                 _mySwipperController.move(index);
                               },
                               child: Hero(
-                                tag: 'CoffeeText',
+                                tag: coffeeType[index][2],
                                 child: Text(
                                   coffeeType[index][0],
                                   style: TextStyle(
@@ -198,6 +231,7 @@ class _HomePageState extends State<HomePage> {
                                   Navigator.push(context, MaterialPageRoute(
                                     builder: (context) {
                                       return DetailPage(
+                                        heroTag: 'firstText',
                                         title: 'Cappucino',
                                       );
                                     },
@@ -207,6 +241,7 @@ class _HomePageState extends State<HomePage> {
                                   Navigator.push(context, MaterialPageRoute(
                                     builder: (context) {
                                       return DetailPage(
+                                        heroTag: 'secondText',
                                         title: 'Espresso',
                                       );
                                     },
@@ -216,6 +251,7 @@ class _HomePageState extends State<HomePage> {
                                   Navigator.push(context, MaterialPageRoute(
                                     builder: (context) {
                                       return DetailPage(
+                                        heroTag: 'thirdText',
                                         title: 'Latte',
                                       );
                                     },

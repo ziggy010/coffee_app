@@ -7,9 +7,11 @@ import 'package:flutter/scheduler.dart';
 class DetailPage extends StatefulWidget {
   static String id = 'DetailPage';
   final String title;
+  final String heroTag;
 
   DetailPage({
     required this.title,
+    required this.heroTag,
   });
 
   @override
@@ -44,7 +46,7 @@ class _DetailPageState extends State<DetailPage>
         appBar: AppBar(
           backgroundColor: appbarColor,
           title: Hero(
-            tag: 'CoffeeText',
+            tag: widget.heroTag,
             child: Text(
               widget.title,
               style: TextStyle(
