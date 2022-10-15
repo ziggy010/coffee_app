@@ -13,12 +13,34 @@ class DetailPage extends StatefulWidget {
   State<DetailPage> createState() => _DetailPageState();
 }
 
-class _DetailPageState extends State<DetailPage> {
+class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation _colorAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      duration: const Duration(
+        milliseconds: 800,
+      ),
+      vsync: this,
+    );
+
+    _controller.forward();
+
+    _controller.addListener(() {
+      print(_controller.value);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
+        backgroundColor: appbarColor,
         title: Text(
           widget.title,
           style: TextStyle(

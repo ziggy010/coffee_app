@@ -13,7 +13,26 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation _colorAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      duration: const Duration(
+        milliseconds: 700,
+      ),
+      vsync: this,
+    );
+
+    _colorAnimation = ColorTween(
+      begin: Colors.grey.shade600,
+      end: Color(0xFFD27742),
+    ).animate(_animationController);
+  }
+
   List coffeeType = [
     ['Cappucciono', true],
     ['Espresso', false],
@@ -38,6 +57,13 @@ class _HomePageState extends State<HomePage> {
   SwiperController _mySwipperController = SwiperController();
 
   int whichCardClicked = 0;
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _animationController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -146,16 +172,22 @@ class _HomePageState extends State<HomePage> {
                                 changeCoffeeSelection(index);
                                 _mySwipperController.move(index);
                               },
-                              child: Text(
-                                coffeeType[index][0],
-                                style: TextStyle(
-                                  color: coffeeType[index][1]
-                                      ? Color(0xFFD27742)
-                                      : Colors.grey.shade600,
-                                  fontFamily: 'poppins',
-                                  fontSize: 20.sp,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              child: AnimatedBuilder(
+                                animation: _animationController,
+                                builder: (BuildContext context, Widget? child) {
+                                  return Text(
+                                    coffeeType[index][0],
+                                    style: TextStyle(
+                                      // color: _colorAnimation.value,
+                                      color: coffeeType[index][1]
+                                          ? _colorAnimation.value
+                                          : Colors.grey.shade600,
+                                      fontFamily: 'poppins',
+                                      fontSize: 20.sp,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  );
+                                },
                               ),
                             ),
                             SizedBox(
@@ -227,6 +259,7 @@ class _HomePageState extends State<HomePage> {
                       itemWidth: 300.w,
                       onIndexChanged: (value) {
                         changeCoffeeSelection(value);
+                        _animationController.forward();
                       },
                     ),
                   ),
