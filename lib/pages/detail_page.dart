@@ -1,6 +1,5 @@
 import 'package:coffee_app/pages/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 
 class DetailPage extends StatefulWidget {
   static String id = 'DetailPage';
@@ -20,7 +19,6 @@ class _DetailPageState extends State<DetailPage> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        backgroundColor: appbarColor,
         title: Text(
           widget.title,
           style: TextStyle(
