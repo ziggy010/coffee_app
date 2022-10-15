@@ -13,26 +13,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
-  late AnimationController _animationController;
-  late Animation _colorAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _animationController = AnimationController(
-      duration: const Duration(
-        milliseconds: 700,
-      ),
-      vsync: this,
-    );
-
-    _colorAnimation = ColorTween(
-      begin: Colors.grey.shade600,
-      end: Color(0xFFD27742),
-    ).animate(_animationController);
-  }
-
+class _HomePageState extends State<HomePage> {
   List coffeeType = [
     ['Cappucciono', true],
     ['Espresso', false],
@@ -57,13 +38,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   SwiperController _mySwipperController = SwiperController();
 
   int whichCardClicked = 0;
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    _animationController.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -172,22 +146,20 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 changeCoffeeSelection(index);
                                 _mySwipperController.move(index);
                               },
-                              child: AnimatedBuilder(
-                                animation: _animationController,
-                                builder: (BuildContext context, Widget? child) {
-                                  return Text(
-                                    coffeeType[index][0],
-                                    style: TextStyle(
-                                      // color: _colorAnimation.value,
-                                      color: coffeeType[index][1]
-                                          ? _colorAnimation.value
-                                          : Colors.grey.shade600,
-                                      fontFamily: 'poppins',
-                                      fontSize: 20.sp,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  );
-                                },
+                              child: Hero(
+                                tag: 'CoffeeText',
+                                child: Text(
+                                  coffeeType[index][0],
+                                  style: TextStyle(
+                                    // color: _colorAnimation.value,
+                                    color: coffeeType[index][1]
+                                        ? Color(0xFFD27742)
+                                        : Colors.grey.shade600,
+                                    fontFamily: 'poppins',
+                                    fontSize: 20.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                               ),
                             ),
                             SizedBox(
@@ -212,55 +184,63 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       vertical: 10.h,
                     ),
                     height: 400.h,
-                    child: Swiper(
-                      controller: _mySwipperController,
-                      axisDirection: AxisDirection.right,
-                      itemBuilder: (BuildContext context, int index) {
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              whichCardClicked = index;
-                              if (index == 0) {
-                                Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) {
-                                    return DetailPage(title: 'Cappucino');
-                                  },
-                                ));
-                              }
-                              if (index == 1) {
-                                Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) {
-                                    return DetailPage(title: 'Espresso');
-                                  },
-                                ));
-                              }
-                              if (index == 2) {
-                                Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) {
-                                    return DetailPage(title: 'Latte');
-                                  },
-                                ));
-                              }
-                            });
-                          },
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(
-                              20.r,
+                    child: Hero(
+                      tag: 'Swiper',
+                      child: Swiper(
+                        controller: _mySwipperController,
+                        axisDirection: AxisDirection.right,
+                        itemBuilder: (BuildContext context, int index) {
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                whichCardClicked = index;
+                                if (index == 0) {
+                                  Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) {
+                                      return DetailPage(
+                                        title: 'Cappucino',
+                                      );
+                                    },
+                                  ));
+                                }
+                                if (index == 1) {
+                                  Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) {
+                                      return DetailPage(
+                                        title: 'Espresso',
+                                      );
+                                    },
+                                  ));
+                                }
+                                if (index == 2) {
+                                  Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) {
+                                      return DetailPage(
+                                        title: 'Latte',
+                                      );
+                                    },
+                                  ));
+                                }
+                              });
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(
+                                20.r,
+                              ),
+                              child: Image.asset(
+                                imageList[index],
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                            child: Image.asset(
-                              imageList[index],
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        );
-                      },
-                      itemCount: imageList.length,
-                      layout: SwiperLayout.STACK,
-                      itemWidth: 300.w,
-                      onIndexChanged: (value) {
-                        changeCoffeeSelection(value);
-                        _animationController.forward();
-                      },
+                          );
+                        },
+                        itemCount: imageList.length,
+                        layout: SwiperLayout.STACK,
+                        itemWidth: 300.w,
+                        onIndexChanged: (value) {
+                          changeCoffeeSelection(value);
+                        },
+                      ),
                     ),
                   ),
                 ),
@@ -269,31 +249,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           ),
         ),
       ),
-      // bottomNavigationBar: CurvedNavigationBar(
-      //   color: Color.fromARGB(255, 47, 53, 71),
-      //   backgroundColor: Color(0xFF0D0F15),
-      //   buttonBackgroundColor: Color(0xFFD27742),
-      //   items: <Widget>[
-      //     Icon(
-      //       Icons.add,
-      //       size: 30,
-      //       color: Colors.grey.shade600,
-      //     ),
-      //     Icon(
-      //       Icons.list,
-      //       size: 30,
-      //       color: Colors.grey.shade600,
-      //     ),
-      //     Icon(
-      //       Icons.compare_arrows,
-      //       size: 30,
-      //       color: Colors.grey.shade600,
-      //     ),
-      //   ],
-      //   onTap: (index) {
-      //     //Handle button tap
-      //   },
-      // ),
       floatingActionButton: Container(
         height: 70,
         width: 70,
@@ -305,7 +260,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           onPressed: () {},
         ),
       ),
-
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
         shape: CircularNotchedRectangle(),

@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:coffee_app/pages/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 class DetailPage extends StatefulWidget {
   static String id = 'DetailPage';
@@ -13,26 +16,41 @@ class DetailPage extends StatefulWidget {
   State<DetailPage> createState() => _DetailPageState();
 }
 
-class _DetailPageState extends State<DetailPage> {
-  bool isTapped = false;
+class _DetailPageState extends State<DetailPage>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 400),
+    );
+    Timer(Duration(milliseconds: 200), (() => _animationController.forward()));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _animationController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          isTapped = true;
-        });
-      },
       child: Scaffold(
         backgroundColor: backgroundColor,
         appBar: AppBar(
           backgroundColor: appbarColor,
-          title: Text(
-            widget.title,
-            style: TextStyle(
-              color: Colors.white,
-              fontFamily: 'poppins',
+          title: Hero(
+            tag: 'CoffeeText',
+            child: Text(
+              widget.title,
+              style: TextStyle(
+                color: Colors.white,
+                fontFamily: 'poppins',
+              ),
             ),
           ),
         ),
@@ -42,12 +60,15 @@ class _DetailPageState extends State<DetailPage> {
               padding: const EdgeInsets.all(24.0),
               child: Column(
                 children: [
-                  Container(
-                    height: 200,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: appbarColor,
-                      borderRadius: BorderRadius.circular(18),
+                  Hero(
+                    tag: 'Swiper',
+                    child: Container(
+                      height: 200,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: appbarColor,
+                        borderRadius: BorderRadius.circular(18),
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -56,20 +77,37 @@ class _DetailPageState extends State<DetailPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Container(
-                        height: 45,
-                        width: 120,
-                        decoration: BoxDecoration(
-                          color: appbarColor,
-                          borderRadius: BorderRadius.circular(12),
+                      SlideTransition(
+                        position: Tween<Offset>(
+                          begin: Offset(0, 5),
+                          end: Offset.zero,
+                        ).animate(_animationController),
+                        child: FadeTransition(
+                          opacity: _animationController,
+                          child: Container(
+                            height: 45,
+                            width: 120,
+                            decoration: BoxDecoration(
+                              color: appbarColor,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
                         ),
                       ),
-                      Container(
-                        height: 45,
-                        width: 120,
-                        decoration: BoxDecoration(
-                          color: appbarColor,
-                          borderRadius: BorderRadius.circular(12),
+                      SlideTransition(
+                        position:
+                            Tween<Offset>(begin: Offset(0, 5), end: Offset.zero)
+                                .animate(_animationController),
+                        child: FadeTransition(
+                          opacity: _animationController,
+                          child: Container(
+                            height: 45,
+                            width: 120,
+                            decoration: BoxDecoration(
+                              color: appbarColor,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
                         ),
                       ),
                     ],
@@ -78,10 +116,19 @@ class _DetailPageState extends State<DetailPage> {
                     height: 30,
                   ),
                   Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: appbarColor,
-                        borderRadius: BorderRadius.circular(12),
+                    child: SlideTransition(
+                      position: Tween<Offset>(
+                        begin: Offset(0, 1),
+                        end: Offset.zero,
+                      ).animate(_animationController),
+                      child: FadeTransition(
+                        opacity: _animationController,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: appbarColor,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
                       ),
                     ),
                   ),
