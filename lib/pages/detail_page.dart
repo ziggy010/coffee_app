@@ -7,20 +7,20 @@ import 'package:flutter/scheduler.dart';
 class DetailPage extends StatefulWidget {
   static String id = 'DetailPage';
   final String title;
-  final String heroTag;
 
   DetailPage({
     required this.title,
-    required this.heroTag,
   });
 
   @override
   State<DetailPage> createState() => _DetailPageState();
 }
 
-class _DetailPageState extends State<DetailPage>
-    with SingleTickerProviderStateMixin {
+class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
   late AnimationController _animationController;
+
+  late AnimationController _rotationController;
+  late Animation<double> _animation;
 
   @override
   void initState() {
@@ -30,12 +30,32 @@ class _DetailPageState extends State<DetailPage>
       duration: const Duration(milliseconds: 400),
     );
     Timer(Duration(milliseconds: 200), (() => _animationController.forward()));
+
+    _rotationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 400),
+      value: 0.25,
+      lowerBound: 0.25,
+      upperBound: 0.5,
+    );
+
+    _animation = CurvedAnimation(
+      parent: _rotationController,
+      curve: Curves.easeInOut,
+    );
+
+    _animation =
+        CurvedAnimation(parent: _animationController, curve: Curves.easeInOut);
+
+    _rotationController.forward();
+    // Timer(Duration(milliseconds: 200), (() => _rotationController.forward()));
   }
 
   @override
   void dispose() {
     super.dispose();
     _animationController.dispose();
+    _rotationController.dispose();
   }
 
   @override
@@ -45,14 +65,11 @@ class _DetailPageState extends State<DetailPage>
         backgroundColor: backgroundColor,
         appBar: AppBar(
           backgroundColor: appbarColor,
-          title: Hero(
-            tag: widget.heroTag,
-            child: Text(
-              widget.title,
-              style: TextStyle(
-                color: Colors.white,
-                fontFamily: 'poppins',
-              ),
+          title: Text(
+            widget.title,
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'poppins',
             ),
           ),
         ),
@@ -62,8 +79,8 @@ class _DetailPageState extends State<DetailPage>
               padding: const EdgeInsets.all(24.0),
               child: Column(
                 children: [
-                  Hero(
-                    tag: 'Swiper',
+                  RotationTransition(
+                    turns: _rotationController,
                     child: Container(
                       height: 200,
                       width: double.infinity,

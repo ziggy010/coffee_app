@@ -30,9 +30,18 @@ class _HomePageState extends State<HomePage>
   }
 
   List coffeeType = [
-    ['Cappucciono', true, 'firstText'],
-    ['Espresso', false, 'secondText'],
-    ['Latte', false, 'thirdText'],
+    [
+      'Cappucciono',
+      true,
+    ],
+    [
+      'Espresso',
+      false,
+    ],
+    [
+      'Latte',
+      false,
+    ],
   ];
 
   List imageList = [
@@ -126,33 +135,6 @@ class _HomePageState extends State<HomePage>
                     ),
                   ),
                 ),
-
-                // TweenAnimationBuilder(
-                //   curve: Curves.easeInOut,
-                //   duration: Duration(milliseconds: 700),
-                //   tween: Tween<double>(begin: 0, end: 1),
-                //   child: Text(
-                //     'Find the best\ncoffee for you',
-                //     style: TextStyle(
-                //       color: Colors.white,
-                //       fontFamily: 'poppins',
-                //       fontSize: 35.sp,
-                //       fontWeight: FontWeight.bold,
-                //     ),
-                //   ),
-                //   builder:
-                //       (BuildContext context, dynamic value, Widget? child) {
-                //     return Opacity(
-                //       opacity: value,
-                //       child: Padding(
-                //         padding: EdgeInsets.only(
-                //           top: value * 30,
-                //         ),
-                //         child: child,
-                //       ),
-                //     );
-                //   },
-                // ),
                 SizedBox(
                   height: 30.h,
                 ),
@@ -179,19 +161,16 @@ class _HomePageState extends State<HomePage>
                                 changeCoffeeSelection(index);
                                 _mySwipperController.move(index);
                               },
-                              child: Hero(
-                                tag: coffeeType[index][2],
-                                child: Text(
-                                  coffeeType[index][0],
-                                  style: TextStyle(
-                                    // color: _colorAnimation.value,
-                                    color: coffeeType[index][1]
-                                        ? Color(0xFFD27742)
-                                        : Colors.grey.shade600,
-                                    fontFamily: 'poppins',
-                                    fontSize: 20.sp,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                              child: Text(
+                                coffeeType[index][0],
+                                style: TextStyle(
+                                  // color: _colorAnimation.value,
+                                  color: coffeeType[index][1]
+                                      ? Color(0xFFD27742)
+                                      : Colors.grey.shade600,
+                                  fontFamily: 'poppins',
+                                  fontSize: 20.sp,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
@@ -217,66 +196,60 @@ class _HomePageState extends State<HomePage>
                       vertical: 10.h,
                     ),
                     height: 400.h,
-                    child: Hero(
-                      tag: 'Swiper',
-                      child: Swiper(
-                        controller: _mySwipperController,
-                        axisDirection: AxisDirection.right,
-                        itemBuilder: (BuildContext context, int index) {
-                          return GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                whichCardClicked = index;
-                                if (index == 0) {
-                                  Navigator.push(context, MaterialPageRoute(
-                                    builder: (context) {
-                                      return DetailPage(
-                                        heroTag: 'firstText',
-                                        title: 'Cappucino',
-                                      );
-                                    },
-                                  ));
-                                }
-                                if (index == 1) {
-                                  Navigator.push(context, MaterialPageRoute(
-                                    builder: (context) {
-                                      return DetailPage(
-                                        heroTag: 'secondText',
-                                        title: 'Espresso',
-                                      );
-                                    },
-                                  ));
-                                }
-                                if (index == 2) {
-                                  Navigator.push(context, MaterialPageRoute(
-                                    builder: (context) {
-                                      return DetailPage(
-                                        heroTag: 'thirdText',
-                                        title: 'Latte',
-                                      );
-                                    },
-                                  ));
-                                }
-                              });
-                            },
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(
-                                20.r,
-                              ),
-                              child: Image.asset(
-                                imageList[index],
-                                fit: BoxFit.cover,
-                              ),
+                    child: Swiper(
+                      controller: _mySwipperController,
+                      axisDirection: AxisDirection.right,
+                      itemBuilder: (BuildContext context, int index) {
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              whichCardClicked = index;
+                              if (index == 0) {
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return DetailPage(
+                                      title: 'Cappucino',
+                                    );
+                                  },
+                                ));
+                              }
+                              if (index == 1) {
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return DetailPage(
+                                      title: 'Espresso',
+                                    );
+                                  },
+                                ));
+                              }
+                              if (index == 2) {
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return DetailPage(
+                                      title: 'Latte',
+                                    );
+                                  },
+                                ));
+                              }
+                            });
+                          },
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(
+                              20.r,
                             ),
-                          );
-                        },
-                        itemCount: imageList.length,
-                        layout: SwiperLayout.STACK,
-                        itemWidth: 300.w,
-                        onIndexChanged: (value) {
-                          changeCoffeeSelection(value);
-                        },
-                      ),
+                            child: Image.asset(
+                              imageList[index],
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        );
+                      },
+                      itemCount: imageList.length,
+                      layout: SwiperLayout.STACK,
+                      itemWidth: 300.w,
+                      onIndexChanged: (value) {
+                        changeCoffeeSelection(value);
+                      },
                     ),
                   ),
                 ),
