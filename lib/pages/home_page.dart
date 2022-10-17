@@ -13,9 +13,11 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>
-    with SingleTickerProviderStateMixin {
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late AnimationController _animationController;
+
+  late AnimationController _rotationController;
+  late Animation<double> _animation;
 
   @override
   void initState() {
@@ -24,6 +26,21 @@ class _HomePageState extends State<HomePage>
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 400),
+    );
+
+    _rotationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 600),
+    );
+
+    _animation = CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.easeInOut,
+    );
+
+    _animation = CurvedAnimation(
+      parent: _rotationController,
+      curve: Curves.easeInOut,
     );
 
     _animationController.forward();
@@ -62,6 +79,8 @@ class _HomePageState extends State<HomePage>
   SwiperController _mySwipperController = SwiperController();
 
   int whichCardClicked = 0;
+
+  bool isFabPressed = false;
 
   @override
   Widget build(BuildContext context) {
@@ -262,11 +281,24 @@ class _HomePageState extends State<HomePage>
         height: 70,
         width: 70,
         child: FloatingActionButton(
-          child: const Icon(
-            Icons.add,
-            color: Colors.white,
-          ),
-          onPressed: () {},
+          child: isFabPressed
+              ? RotationTransition(
+                  turns: _rotationController,
+                  child: Image.asset('images/cross.png'))
+              : RotationTransition(
+                  turns: _rotationController,
+                  child: Image.asset(
+                    'images/Scanner.png',
+                  ),
+                ),
+          onPressed: () {
+            setState(() {
+              isFabPressed = !isFabPressed;
+              isFabPressed
+                  ? _rotationController.forward()
+                  : _rotationController.reverse();
+            });
+          },
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

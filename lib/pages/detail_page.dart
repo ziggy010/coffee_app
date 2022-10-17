@@ -27,13 +27,13 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 600),
     );
     Timer(Duration(milliseconds: 200), (() => _animationController.forward()));
 
     _rotationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 400),
+      duration: Duration(milliseconds: 600),
       value: 0.25,
       lowerBound: 0.25,
       upperBound: 0.5,
